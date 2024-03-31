@@ -19,3 +19,10 @@ docker-compose up -d
 ```
 npm run start:dev
 ```
+
+## Stack usado 
+* NestJS  
+* TypeScript 
+* Docker 
+* PostgreSQL
+* TypeOrm
