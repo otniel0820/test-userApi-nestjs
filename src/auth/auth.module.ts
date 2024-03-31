@@ -8,7 +8,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // import { JwtModule } from '@nestjs/jwt';
 
-
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
@@ -19,17 +18,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        
         return {
           secret: configService.get('JWT_SECRET'),
           signOptions: {
-            expiresIn: '2h',
+            expiresIn: '1h',
           },
         };
-      }
-    })
-    
-],
-  exports: [TypeOrmModule] // Exporta el módulo TypeOrmModule para que pueda ser usado en otros módulos. Esto permite que los módulos que lo requieran puedan acceder a la base de datos.
+      },
+    }),
+  ],
+  exports: [TypeOrmModule], // Exporta el módulo TypeOrmModule para que pueda ser usado en otros módulos. Esto permite que los módulos que lo requieran puedan acceder a la base de datos.
 })
 export class AuthModule {}
