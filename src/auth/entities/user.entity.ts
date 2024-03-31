@@ -12,7 +12,9 @@ export class User {
     })
     email: string;
 
-    @Column('text')
+    @Column('text', {
+        select: false // Esto es para que la contraseña no se muestre en la respuesta de la api
+    })
     password: string;
 
     @Column('text')
@@ -25,7 +27,7 @@ export class User {
 
     @Column('text',{
         array: true,
-        default: ['user'] // Valor por defecto para el campo roles. Esto es opcional, pero se puede agregar una validación adicional para asegurar que los roles sean válidos. Esto podría incluirse en un módu
+        default: ['user'] // Valor por defecto para el campo roles.
     })
     roles: string[];
 }
