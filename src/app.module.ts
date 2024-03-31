@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EnvConfig } from './common/envs.config';
+import { EnvConfig } from './common/config/envs.config';
 import { AuthModule } from './auth/auth.module';
 
 
