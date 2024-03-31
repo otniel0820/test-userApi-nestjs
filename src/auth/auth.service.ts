@@ -56,7 +56,6 @@ export class AuthService {
       ...user,
       token: this.getJwtToken({ id: user.id }), //generar jwt token
     };
-    //Todo: retornar jwt
   }
 
   private getJwtToken(payload: JwtPayload) {
