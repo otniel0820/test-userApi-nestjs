@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get} from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { User } from './entities/user.entity';
@@ -20,35 +20,26 @@ export class AuthController {
 
   @Get('private')
   @Auth()
-  testingPrivateRoute(
-    @GetUser() user: User,
-    ) {
-
+  testingPrivateRoute(@GetUser() user: User) {
     return {
       ok: true,
       user,
-      
     };
-
   }
   @Get('private2')
   @Auth(ValidRoles.admin)
-  privateRoute2(
-    @GetUser() user: User,
-  ){
+  privateRoute2(@GetUser() user: User) {
     return {
       ok: true,
-      user
-    }
+      user,
+    };
   }
   @Get('private3')
   @Auth(ValidRoles.admin, ValidRoles.superUser)
-  privateRoute3(
-    @GetUser() user: User,
-  ){
+  privateRoute3(@GetUser() user: User) {
     return {
       ok: true,
-      user
-    }
+      user,
+    };
   }
 }
