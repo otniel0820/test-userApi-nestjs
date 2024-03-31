@@ -26,7 +26,7 @@ export class AuthService {
       delete user.password
       return {
         ...user,
-        token: this.getJwtToken({email: user.email}) //generar jwt token
+        token: this.getJwtToken({id: user.id}) //generar jwt token
       }
     } catch (error) {
       this.handleDBErrors(error);
@@ -48,7 +48,7 @@ export class AuthService {
 
     return {
       ...user,
-      token: this.getJwtToken({email: user.email}) //generar jwt token
+      token: this.getJwtToken({id: user.id}) //generar jwt token
     }
     //Todo: retornar jwt
   }
