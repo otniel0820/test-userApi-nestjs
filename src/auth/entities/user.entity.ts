@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('users')
@@ -30,4 +30,14 @@ export class User {
         default: ['user'] // Valor por defecto para el campo roles.
     })
     roles: string[];
+
+    @BeforeInsert()
+    checkFieldsBeforeInsert(){
+        this.email= this.email.toLowerCase().trim(); //convertir a minusculas y quitar espacios en blanco.
+    }
+
+    @BeforeUpdate()
+    checkFieldForUpdate(){
+        this.checkFieldsBeforeInsert();
+    }
 }

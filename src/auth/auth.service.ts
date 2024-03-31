@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto, LoginUserDto } from './dto';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService, // Este servicio es proveido directamente por nest jwt y el jwtModule
   ) {}
   async create(createUserDto: CreateUserDto) {
     try {
@@ -21,8 +24,10 @@ export class AuthService {
       });
       await this.userRepository.save(user);
       delete user.password
-      return user;
-      //Todo: retornar el jwt
+      return {
+        ...user,
+        token: this.getJwtToken({email: user.email}) //generar jwt token
+      }
     } catch (error) {
       this.handleDBErrors(error);
     }
@@ -41,8 +46,18 @@ export class AuthService {
 
     if(!bcrypt.compareSync(password, user.password))  throw new BadRequestException('Invalid Password')
 
-    return user
+    return {
+      ...user,
+      token: this.getJwtToken({email: user.email}) //generar jwt token
+    }
     //Todo: retornar jwt
+  }
+
+
+  private getJwtToken(payload: JwtPayload){
+
+    const token = this.jwtService.sign(payload)
+    return token
   }
 
   private handleDBErrors(error: any): never{
