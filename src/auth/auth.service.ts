@@ -51,6 +51,7 @@ export class AuthService {
 
     if (!bcrypt.compareSync(password, user.password))
       throw new BadRequestException('Invalid Password');
+      delete user.password;
 
     return {
       ...user,
